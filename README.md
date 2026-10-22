@@ -64,6 +64,9 @@ they are not authoritative, and the UI labels them as such.
 - `exam-data.js` — shared scaffolding: the `EXAM_BANK` object, the study
   guide reference, and the `Link`/`Tree` prelude used by every runner.
   The file's header comment documents the full data shape.
+- `theme.css` / `theme.js` — the shared look for both pages: a dark
+  terminal-style theme with a light-mode toggle that remembers your choice.
+  Change colors in the `:root` variables at the top of `theme.css`.
 - `exams/<term>.js` — one file per exam, each pushing one exam onto
   `EXAM_BANK.exams`. Add a new exam by dropping in a file and adding a
   `<script>` tag in `exams.html`.
