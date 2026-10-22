@@ -1,13 +1,13 @@
 # CS61A Midterm 2 Past Exam Practice Bank
 
-A local, interactive practice site for CS61A Midterm 2 material. Every
-problem is converted from a real past-exam question (originally
-fill-in-the-blank, multiple-choice, or WWPD) into a full coding
-implementation problem, while preserving the algorithm/concept, provided
-helpers, restrictions, and representative examples from the source exam.
+Two local, interactive study tools for CS61A Midterm 2. Python runs
+entirely in the browser via [Skulpt](https://skulpt.org) — no install, no
+backend, no build step.
 
-Python runs entirely in the browser via [Skulpt](https://skulpt.org) — no
-install, no backend, no build step.
+| Page | What it is |
+| --- | --- |
+| `index.html` | **Practice bank** — 20 standalone coding problems, each converted from a past-exam question into a full implementation problem with hidden tests, hints, and a reference solution. |
+| `exams.html` | **Past exams** — six real Midterm 2 exams (Spring 2023 → Fall 2025) in their original form, answerable on screen: multiple choice, select-all, WWPD, and fill-in-the-blank code. |
 
 ## Use it
 
@@ -15,9 +15,16 @@ install, no backend, no build step.
 python3 -m http.server 8743
 ```
 
-then open http://localhost:8743. (Opening `index.html` directly as a
-`file://` URL is blocked by some browsers' security policy, so a tiny
-static server is the simplest way to run it.)
+then open http://localhost:8743. (Opening the files directly as `file://`
+URLs is blocked by some browsers' security policy, so a tiny static
+server is the simplest way to run them.)
+
+## The practice bank (`index.html`)
+
+Every problem is converted from a real past-exam question (originally
+fill-in-the-blank, multiple-choice, or WWPD) into a full coding
+implementation problem, while preserving the algorithm/concept, provided
+helpers, restrictions, and representative examples from the source exam.
 
 Pick a problem from the sidebar (filterable by topic), write your
 solution, and click **Run tests**. Progressive **Hints**, **Reset code**,
@@ -25,25 +32,48 @@ and **Show solution** (with an explanation of the idea and common
 mistakes) are available for every problem. Your code and best score per
 problem are saved in your browser's local storage.
 
-## What's in the bank
-
 20 problems across Recursion, Tree Recursion, Lists & Dicts, Linked
-Lists, Mutation, Higher-Order Functions, and Iterators & Generators —
-see the sidebar for the full list. Each problem's "source" line credits
-the original exam question it was converted from.
+Lists, Mutation, Higher-Order Functions, and Iterators & Generators. Each
+problem's "source" line credits the question it was converted from.
+
+## The past exams (`exams.html`)
+
+Six complete exams, question by question, with the original point values
+and question types intact — 176 answer blanks in total, plus a countdown
+timer if you want to sit one under time.
+
+- Multiple-choice, select-all, and short-answer responses are **checked
+  automatically**.
+- Fill-in-the-blank code questions have a **Run tests** button: your
+  blanks are substituted into the real function and the exam's own
+  doctests are executed.
+- Every question also has a **Show answer** button with a worked solution
+  and explanation.
+
+**About those answers:** the exam PDFs ship without an answer key, so
+every answer in `exams.html` is my own worked solution, not official
+course material. Each one was verified by actually running the code —
+all 44 code runners pass their doctests with the stated answers — but
+they are not authoritative, and the UI labels them as such.
 
 ## Files
 
-- `index.html` — the renderer: layout, editor, test runner, hints,
-  solutions, filters. You shouldn't need to touch this to add problems.
-- `questions.js` — the question bank (`QUESTION_BANK = {prelude, problems}`).
-  All problem content lives here, completely separate from the renderer.
+- `index.html` / `questions.js` — the practice bank and its question data.
+- `exams.html` — the past-exam renderer: layout, inputs, checking, timer,
+  and the Skulpt runner.
+- `exam-data.js` — shared scaffolding: the `EXAM_BANK` object, the study
+  guide reference, and the `Link`/`Tree` prelude used by every runner.
+  The file's header comment documents the full data shape.
+- `exams/<term>.js` — one file per exam, each pushing one exam onto
+  `EXAM_BANK.exams`. Add a new exam by dropping in a file and adding a
+  `<script>` tag in `exams.html`.
 
-## Adding another exam
+## Adding more material
 
-Hand this project (or Claude, if you're using it) another exam file and
-say "add these questions to the bank." Concretely, each new problem is
-one object appended to the `problems` array in `questions.js`:
+To add a **whole exam**, create `exams/<term>.js` following the shape
+documented at the top of `exam-data.js`, then add a `<script>` tag for it
+in `exams.html`. To add **individual practice problems**, append to the
+`problems` array in `questions.js`:
 
 ```js
 {

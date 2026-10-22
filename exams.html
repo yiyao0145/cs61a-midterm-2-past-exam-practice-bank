@@ -1,0 +1,624 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}[hidden]{display:none!important}</style></head><body>
+<title>CS61A Midterm 2 — Past Exams</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root {
+  --bg: #f3f5f8; --panel: #ffffff; --ink: #14202e; --muted: #5a6879; --line: #d8dfe8;
+  --accent: #1d4f91; --accent-ink: #ffffff; --accent-soft: #e4edf8;
+  --ok: #17794a; --ok-soft: #e0f3ea; --bad: #b3261e; --bad-soft: #fbe8e6;
+  --warn: #8a5a00; --warn-soft: #fdf1dc;
+  --code-bg: #fafbfd; --code-ink: #14202e;
+  --font-ui: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --font-code: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1621; --panel: #152130; --ink: #e6edf5; --muted: #93a2b5; --line: #26364a;
+    --accent: #6ea8ff; --accent-ink: #0b1624; --accent-soft: #1b2e48;
+    --ok: #4cc38a; --ok-soft: #14352a; --bad: #ff7b72; --bad-soft: #3c1b1b;
+    --warn: #e0b150; --warn-soft: #3a2f16;
+    --code-bg: #0b121b; --code-ink: #e6edf5; color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 15px; line-height: 1.55; padding: 16px 16px 60px; }
+.wrap { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+header.top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; }
+header.top h1 { font-size: 20px; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+header.top p { margin: 0; color: var(--muted); font-size: 13px; max-width: 72ch; }
+header.top a { color: var(--accent); }
+.examtabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.examtabs button { all: unset; cursor: pointer; font-size: 13.5px; padding: 6px 12px; border-radius: 16px; border: 1px solid var(--line); background: var(--panel); }
+.examtabs button:hover { border-color: var(--accent); }
+.examtabs button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; }
+.toolbar .grow { flex: 1 1 auto; }
+.timer { font-family: var(--font-code); font-size: 18px; font-variant-numeric: tabular-nums; }
+.timer.low { color: var(--bad); }
+.score { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.layout { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 16px; align-items: start; }
+nav.qnav { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px; display: flex; flex-direction: column; gap: 2px; position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow-y: auto; }
+nav.qnav a { text-decoration: none; color: inherit; display: flex; justify-content: space-between; gap: 8px; padding: 7px 8px; border-radius: 6px; font-size: 13.5px; }
+nav.qnav a:hover { background: var(--accent-soft); }
+nav.qnav .tally { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+nav.qnav .tally.done { color: var(--ok); font-weight: 600; }
+main.sheet { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.qcard { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 18px 20px; min-width: 0; scroll-margin-top: 16px; }
+.qhead { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+.qhead h2 { font-size: 18px; font-weight: 600; margin: 0; }
+.qhead .pts { font-size: 12.5px; color: var(--muted); }
+.prose p { margin: 0 0 10px; max-width: 76ch; }
+.prose ul { margin: 0 0 10px; padding-left: 22px; max-width: 76ch; }
+code { font-family: var(--font-code); font-size: .9em; background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; }
+pre { font-family: var(--font-code); font-size: 12.8px; line-height: 1.5; background: var(--code-bg); color: var(--code-ink); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; margin: 0 0 12px; overflow-x: auto; }
+pre code { background: none; padding: 0; font-size: inherit; }
+.section { border-left: 3px solid var(--line); padding-left: 14px; margin: 16px 0; }
+.section > .slabel { font-weight: 600; font-size: 14.5px; margin-bottom: 6px; }
+.section > .slabel .pts { font-weight: 400; font-size: 12.5px; color: var(--muted); margin-left: 6px; }
+.part { margin: 14px 0; padding-top: 12px; border-top: 1px dashed var(--line); }
+.part:first-of-type { border-top: none; padding-top: 0; }
+.part .plabel { font-weight: 600; font-size: 14px; }
+.part .plabel .pts { font-weight: 400; font-size: 12.5px; color: var(--muted); margin-left: 4px; }
+.part .ptext { margin: 2px 0 8px; max-width: 76ch; }
+.opts { display: flex; flex-direction: column; gap: 4px; margin: 6px 0 8px; }
+.opts label { display: flex; align-items: flex-start; gap: 8px; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-family: var(--font-code); font-size: 13px; line-height: 1.5; }
+.opts label:hover { background: var(--accent-soft); }
+.opts label.plain { font-family: var(--font-ui); font-size: 14px; }
+.opts input { margin-top: 3px; flex: none; }
+.opts label.right { background: var(--ok-soft); }
+.opts label.wrong { background: var(--bad-soft); }
+textarea.ans, input.ans { width: 100%; font-family: var(--font-code); font-size: 13.5px; line-height: 1.55; background: var(--code-bg); color: var(--code-ink); border: 1px solid var(--line); border-radius: 6px; padding: 9px 11px; }
+textarea.ans { min-height: 60px; resize: vertical; white-space: pre; overflow: auto; tab-size: 4; }
+textarea.ans:focus-visible, input.ans:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.prow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 8px; }
+.btn { font: inherit; font-size: 13.5px; cursor: pointer; border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 6px; padding: 6px 12px; }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 500; }
+.btn:disabled { opacity: .55; cursor: default; }
+.verdict { font-size: 13px; font-weight: 600; }
+.verdict.ok { color: var(--ok); }
+.verdict.no { color: var(--bad); }
+.verdict.meh { color: var(--warn); }
+.answer { margin-top: 10px; border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 6px; padding: 10px 12px; background: var(--code-bg); }
+.answer .alabel { font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.answer .aval { font-family: var(--font-code); font-size: 13.5px; white-space: pre-wrap; overflow-wrap: anywhere; margin-bottom: 8px; }
+.answer .aexp { font-size: 13.5px; color: var(--ink); max-width: 76ch; }
+.answer .aexp p { margin: 0 0 6px; }
+.caveat { background: var(--warn-soft); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; font-size: 13.5px; color: var(--ink); }
+.caveat b { font-weight: 600; }
+.runner { margin: 10px 0 2px; padding: 10px 12px; border: 1px dashed var(--line); border-radius: 6px; }
+.runner .rlabel { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+.runout { font-family: var(--font-code); font-size: 12.5px; margin-top: 8px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.runout .pass { color: var(--ok); }
+.runout .fail { color: var(--bad); }
+.aplus { background: var(--warn-soft); border-radius: 6px; padding: 6px 10px; font-size: 13px; margin-bottom: 8px; }
+.guide { font-size: 13px; }
+.guide summary { cursor: pointer; color: var(--muted); }
+.guide pre { margin-top: 8px; }
+.done-pill { font-size: 11.5px; padding: 1px 7px; border-radius: 10px; background: var(--ok-soft); color: var(--ok); font-weight: 600; }
+@media (max-width: 860px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  nav.qnav { position: static; max-height: none; flex-direction: row; flex-wrap: wrap; }
+  .qcard { padding: 14px; }
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+<script src="exam-data.js"></script>
+<script src="exams/fa25.js"></script>
+<script src="exams/sp25.js"></script>
+<script src="exams/fa24.js"></script>
+<script src="exams/sp24.js"></script>
+<script src="exams/fa23.js"></script>
+<script src="exams/sp23.js"></script>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>CS61A Midterm 2 — Past Exams</h1>
+      <p>Six real past Midterm 2 exams, in their original form, answerable on screen. Looking for single problems with automatic grading instead? Try the <a href="index.html">practice bank</a>.</p>
+    </div>
+  </header>
+
+  <div class="examtabs" id="examtabs"></div>
+
+  <div class="toolbar">
+    <span class="timer" id="timer">1:50:00</span>
+    <button class="btn" id="t-start">Start</button>
+    <button class="btn" id="t-reset">Reset</button>
+    <span class="grow"></span>
+    <span class="score" id="score"></span>
+    <button class="btn" id="clear-exam">Clear my answers</button>
+  </div>
+
+  <div class="caveat">
+    <b>About the answers:</b> these PDFs ship without an answer key, so every answer and explanation
+    here is <b>my own worked solution</b>, not official course material. Each one was checked by
+    actually running the code, but treat a disagreement as worth a second look rather than a verdict.
+    Multiple-choice and short-answer responses are checked automatically; for fill-in-the-blank code,
+    use <b>Run tests</b> to check your own wording against the real doctests.
+  </div>
+
+  <div class="layout">
+    <nav class="qnav" id="qnav" aria-label="Question list"></nav>
+    <main class="sheet" id="sheet"></main>
+  </div>
+</div>
+
+<script>
+(function () {
+  var KEY = "cs61a-mt2-pastexams-v1";
+  var store = { ans: {}, shown: {} };
+  try { var raw = localStorage.getItem(KEY); if (raw) store = Object.assign(store, JSON.parse(raw)); } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
+  var $ = function (id) { return document.getElementById(id); };
+  var exams = EXAM_BANK.exams;
+  var cur = exams[0];
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function norm(s) { return String(s == null ? "" : s).replace(/\s+/g, " ").trim(); }
+
+  // ---------- part identity / storage ----------
+  function partId(p) { return p._id; }
+  function getAns(p) { return store.ans[partId(p)]; }
+  function setAns(p, v) { store.ans[partId(p)] = v; save(); refreshTallies(); }
+
+  // ---------- answer checking ----------
+  function checkPart(p) {
+    var given = getAns(p);
+    if (p.type === "choice") {
+      if (given == null || given === "") return null;
+      return given === p.answer;
+    }
+    if (p.type === "select") {
+      if (!given || !given.length) return null;
+      var a = p.answer.slice().sort().join("\u0001");
+      var b = given.slice().sort().join("\u0001");
+      return a === b;
+    }
+    if (p.type === "text" && p.check !== false) {
+      if (!norm(given)) return null;
+      var accepted = [p.answer].concat(p.accept || []);
+      var g = norm(given);
+      for (var i = 0; i < accepted.length; i++) {
+        if (norm(accepted[i]) === g) return true;
+      }
+      return false;
+    }
+    return null;  // code blanks and ungraded text: no automatic verdict
+  }
+
+  function autoGradable(p) {
+    return p.type === "choice" || p.type === "select" || (p.type === "text" && p.check !== false);
+  }
+
+  // ---------- rendering ----------
+  function renderExamTabs() {
+    var box = $("examtabs"); box.textContent = "";
+    exams.forEach(function (ex) {
+      var b = el("button", null, ex.term);
+      b.setAttribute("aria-pressed", ex.id === cur.id ? "true" : "false");
+      b.addEventListener("click", function () { cur = ex; renderAll(); window.scrollTo(0, 0); });
+      box.appendChild(b);
+    });
+  }
+
+  function renderNav() {
+    var nav = $("qnav"); nav.textContent = "";
+    cur.questions.forEach(function (q) {
+      var a = document.createElement("a");
+      a.href = "#q-" + cur.id + "-" + q.num;
+      var t = el("span", null, q.num + ". " + q.title);
+      var tally = el("span", "tally");
+      tally.dataset.q = q.num;
+      a.appendChild(t); a.appendChild(tally);
+      nav.appendChild(a);
+    });
+  }
+
+  function partsOf(q) {
+    var out = [];
+    q.sections.forEach(function (s) { (s.parts || []).forEach(function (p) { out.push(p); }); });
+    return out;
+  }
+
+  function refreshTallies() {
+    cur.questions.forEach(function (q) {
+      var ps = partsOf(q);
+      var answered = ps.filter(function (p) {
+        var v = getAns(p);
+        return p.type === "select" ? (v && v.length) : norm(v) !== "";
+      }).length;
+      var node = document.querySelector('nav.qnav .tally[data-q="' + q.num + '"]');
+      if (node) {
+        node.textContent = answered + "/" + ps.length;
+        node.className = "tally" + (answered === ps.length ? " done" : "");
+      }
+    });
+    // score across auto-gradable parts of this exam
+    var all = [], right = 0, done = 0;
+    cur.questions.forEach(function (q) { partsOf(q).forEach(function (p) { if (autoGradable(p)) all.push(p); }); });
+    all.forEach(function (p) {
+      var v = checkPart(p);
+      if (v !== null) { done++; if (v) right++; }
+    });
+    $("score").textContent = done
+      ? "Auto-checked: " + right + " / " + done + " correct (" + all.length + " checkable parts in this exam)"
+      : all.length + " parts in this exam can be checked automatically";
+  }
+
+  function renderPart(p, sec, q) {
+    var box = el("div", "part");
+    var head = el("div", "plabel");
+    head.appendChild(document.createTextNode(p.label));
+    if (p.points != null) {
+      var pts = el("span", "pts", "(" + p.points + " pt" + (p.points === 1 ? "" : "s") + ")");
+      head.appendChild(pts);
+    }
+    box.appendChild(head);
+
+    if (p.aplus) box.appendChild(el("div", "aplus", "A+ question — worth 0 points. Finish the rest of the exam first!"));
+
+    if (p.prompt) {
+      var pt = el("div", "ptext");
+      if (p.promptCode) {
+        var c = el("code", null, p.prompt);
+        pt.appendChild(c);
+      } else {
+        pt.innerHTML = p.prompt;
+      }
+      box.appendChild(pt);
+    }
+    if (p.code) {
+      var pre = el("pre"); pre.appendChild(el("code", null, p.code)); box.appendChild(pre);
+    }
+
+    var verdict = el("span", "verdict");
+
+    function showVerdict() {
+      var v = checkPart(p);
+      if (v === null) { verdict.textContent = ""; verdict.className = "verdict"; return; }
+      verdict.textContent = v ? "✓ Correct" : "✗ Not what I get";
+      verdict.className = "verdict " + (v ? "ok" : "no");
+      // highlight options
+      if (p.type === "choice" || p.type === "select") {
+        Array.prototype.forEach.call(box.querySelectorAll(".opts label"), function (lab) {
+          lab.classList.remove("right", "wrong");
+        });
+      }
+    }
+
+    if (p.type === "choice" || p.type === "select") {
+      var opts = el("div", "opts");
+      p.options.forEach(function (o, i) {
+        var lab = el("label", p.plainOptions ? "plain" : null);
+        var inp = document.createElement("input");
+        inp.type = p.type === "choice" ? "radio" : "checkbox";
+        inp.name = partId(p);
+        inp.value = o;
+        var given = getAns(p);
+        if (p.type === "choice") inp.checked = given === o;
+        else inp.checked = !!(given && given.indexOf(o) >= 0);
+        inp.addEventListener("change", function () {
+          if (p.type === "choice") setAns(p, o);
+          else {
+            var sel = [];
+            Array.prototype.forEach.call(opts.querySelectorAll("input"), function (x) { if (x.checked) sel.push(x.value); });
+            setAns(p, sel);
+          }
+          showVerdict();
+        });
+        lab.appendChild(inp);
+        lab.appendChild(el("span", null, o));
+        opts.appendChild(lab);
+      });
+      box.appendChild(opts);
+    } else {
+      var ta;
+      if (p.oneLine) {
+        ta = document.createElement("input"); ta.type = "text"; ta.className = "ans";
+      } else {
+        ta = document.createElement("textarea"); ta.className = "ans";
+        ta.rows = p.rows || 2; ta.spellcheck = false;
+      }
+      ta.value = getAns(p) || "";
+      ta.setAttribute("aria-label", "Answer for " + p.label);
+      ta.addEventListener("input", function () { setAns(p, ta.value); });
+      ta.addEventListener("change", showVerdict);
+      box.appendChild(ta);
+    }
+
+    var row = el("div", "prow");
+    if (autoGradable(p)) {
+      var cb = el("button", "btn", "Check");
+      cb.addEventListener("click", showVerdict);
+      row.appendChild(cb);
+    }
+    var sb = el("button", "btn", "Show answer");
+    row.appendChild(sb);
+    row.appendChild(verdict);
+    box.appendChild(row);
+
+    var ansBox = el("div", "answer");
+    ansBox.hidden = true;
+    ansBox.appendChild(el("div", "alabel", "My worked answer — not an official key"));
+    var aval = el("div", "aval");
+    aval.textContent = Array.isArray(p.answer) ? p.answer.join("\n") : p.answer;
+    ansBox.appendChild(aval);
+    if (p.explain) {
+      var ex = el("div", "aexp");
+      ex.innerHTML = p.explain;
+      ansBox.appendChild(ex);
+    }
+    box.appendChild(ansBox);
+
+    function toggleAnswer() {
+      ansBox.hidden = !ansBox.hidden;
+      sb.textContent = ansBox.hidden ? "Show answer" : "Hide answer";
+      store.shown[partId(p)] = !ansBox.hidden;
+      save();
+    }
+    sb.addEventListener("click", toggleAnswer);
+    if (store.shown[partId(p)]) toggleAnswer();
+
+    showVerdict();
+    return box;
+  }
+
+  function renderRunner(sec, q) {
+    var wrap = el("div", "runner");
+    wrap.appendChild(el("div", "rlabel", sec.runner.label || "Fill in every blank above, then run the real doctests against your answers."));
+    var btn = el("button", "btn primary", "Run tests");
+    var out = el("div", "runout");
+    wrap.appendChild(btn);
+    wrap.appendChild(out);
+    btn.addEventListener("click", function () { runSection(sec, out, btn, q); });
+    return wrap;
+  }
+
+  function renderSection(sec, q) {
+    var box = el("div", sec.label ? "section" : null);
+    if (sec.label) {
+      var lab = el("div", "slabel");
+      lab.appendChild(document.createTextNode(sec.label));
+      if (sec.points != null) lab.appendChild(el("span", "pts", "(" + sec.points + " points)"));
+      box.appendChild(lab);
+    }
+    if (sec.intro) {
+      var pr = el("div", "prose");
+      pr.innerHTML = sec.intro.join("");
+      box.appendChild(pr);
+    }
+    if (sec.code) {
+      var pre = el("pre"); pre.appendChild(el("code", null, sec.code)); box.appendChild(pre);
+    }
+    if (sec.after) {
+      var pr2 = el("div", "prose");
+      pr2.innerHTML = sec.after.join("");
+      box.appendChild(pr2);
+    }
+    (sec.parts || []).forEach(function (p) { box.appendChild(renderPart(p, sec, q)); });
+    if (sec.runner) box.appendChild(renderRunner(sec, q));
+    return box;
+  }
+
+  function renderQuestion(q) {
+    var card = el("div", "qcard");
+    card.id = "q-" + cur.id + "-" + q.num;
+    var head = el("div", "qhead");
+    head.appendChild(el("h2", null, q.num + ". " + q.title));
+    if (q.points != null) head.appendChild(el("span", "pts", "(" + q.points + " points)"));
+    card.appendChild(head);
+    if (q.intro) {
+      var pr = el("div", "prose");
+      pr.innerHTML = q.intro.join("");
+      card.appendChild(pr);
+    }
+    if (q.code) {
+      var pre = el("pre"); pre.appendChild(el("code", null, q.code)); card.appendChild(pre);
+    }
+    if (q.after) {
+      var pr2 = el("div", "prose"); pr2.innerHTML = q.after.join(""); card.appendChild(pr2);
+    }
+    q.sections.forEach(function (s) { card.appendChild(renderSection(s, q)); });
+    return card;
+  }
+
+  function renderGuide() {
+    var card = el("div", "qcard");
+    var d = document.createElement("details");
+    d.className = "guide";
+    var s = document.createElement("summary");
+    s.textContent = "Study guide reference — the Link and Tree classes these exams assume";
+    d.appendChild(s);
+    var pre = el("pre"); pre.appendChild(el("code", null, EXAM_BANK.studyGuide));
+    d.appendChild(pre);
+    card.appendChild(d);
+    return card;
+  }
+
+  function assignIds() {
+    exams.forEach(function (ex) {
+      ex.questions.forEach(function (q) {
+        q.sections.forEach(function (sec, si) {
+          (sec.parts || []).forEach(function (p) {
+            p._id = ex.id + ".q" + q.num + "." + si + "." + p.key;
+          });
+        });
+      });
+    });
+  }
+
+  function renderAll() {
+    renderExamTabs();
+    renderNav();
+    var sheet = $("sheet"); sheet.textContent = "";
+    sheet.appendChild(renderGuide());
+    cur.questions.forEach(function (q) { sheet.appendChild(renderQuestion(q)); });
+    refreshTallies();
+    resetTimer();
+  }
+
+  // ---------- Skulpt runner ----------
+  function buildProgram(sec, q) {
+    var code = sec.runner.code;
+    var missing = [];
+    // A runner may reference a blank from any part of the same question, not
+    // only its own section (an A+ follow-up can check an earlier blank). Its
+    // own parts come first: sibling sections often reuse the same keys, and
+    // once a token has been substituted it is gone, so first match wins.
+    var candidates = (sec.parts || []).slice();
+    (q ? q.sections : []).forEach(function (s) {
+      if (s === sec) return;
+      (s.parts || []).forEach(function (p) { candidates.push(p); });
+    });
+    candidates.forEach(function (p) {
+      if (!p.key) return;
+      var token = "{{" + p.key + "}}";
+      if (code.indexOf(token) < 0) return;
+      var v = getAns(p);
+      // A "select all that apply" blank still has to become one expression:
+      // any single one of the correct choices is a valid substitution.
+      if (Array.isArray(v)) v = v.length ? v[0] : "";
+      v = (v == null ? "" : String(v)).trim();
+      if (!v) { missing.push(p.label); v = "None"; }
+      // A multi-line answer has to line up under the blank it replaces,
+      // so continuation lines are indented to the placeholder's column.
+      while (true) {
+        var at = code.indexOf(token);
+        if (at < 0) break;
+        var col = at - (code.lastIndexOf("\n", at - 1) + 1);
+        var pad = new Array(col + 1).join(" ");
+        var piece = v.split("\n").map(function (line, i) {
+          return i === 0 ? line : pad + line.replace(/^\s+/, "");
+        }).join("\n");
+        code = code.slice(0, at) + piece + code.slice(at + token.length);
+      }
+    });
+    var pre = (EXAM_BANK.runPrelude || "") + "\n" + (sec.runner.prelude || "") + "\n";
+    var out = pre + code + "\n\n";
+    sec.runner.tests.forEach(function (t, i) {
+      out += "try:\n";
+      (t.setup ? t.setup.split("\n") : []).forEach(function (l) { out += "    " + l + "\n"; });
+      out += "    __g = repr(" + t.expr + ")\n";
+      out += "    __e = repr(" + t.expected + ")\n";
+      out += "    print('@@T\\t" + i + "\\t' + str(__g == __e) + '\\t' + __g + '\\t' + __e)\n";
+      out += "except BaseException as __x:\n";
+      out += "    print('@@T\\t" + i + "\\tERR\\t' + type(__x).__name__ + ': ' + str(__x) + '\\t')\n";
+    });
+    return { program: out, missing: missing };
+  }
+
+  var running = false;
+  function runSection(sec, out, btn, q) {
+    if (typeof Sk === "undefined") { out.textContent = "The Python engine is still loading — try again in a moment."; return; }
+    if (running) { out.textContent = "Another run is in progress…"; return; }
+    var built = buildProgram(sec, q);
+    out.textContent = "";
+    if (built.missing.length) {
+      out.appendChild(el("div", null, "Blank " + built.missing.join(", ") + " is empty — I substituted None there, so expect errors."));
+    }
+    running = true; btn.disabled = true;
+    var lines = [];
+    var status = el("div", null, "Running…");
+    out.appendChild(status);
+    Sk.configure({
+      output: function (s) { lines.push(s); },
+      read: function (x) {
+        if (!Sk.builtinFiles || Sk.builtinFiles.files[x] === undefined) throw "File not found: '" + x + "'";
+        return Sk.builtinFiles.files[x];
+      },
+      __future__: Sk.python3, execLimit: 8000
+    });
+    var done = function () { running = false; btn.disabled = false; };
+    var p;
+    try {
+      p = Sk.misceval.asyncToPromise(function () {
+        return Sk.importMainWithBody("<stdin>", false, built.program, true);
+      });
+    } catch (err) { p = Promise.reject(err); }
+    p.then(function () {
+      status.remove();
+      var res = [];
+      for (var i = 0; i < sec.runner.tests.length; i++) res.push({ status: "ERR", got: "no result", exp: "" });
+      lines.forEach(function (ln) {
+        ln.split("\n").forEach(function (l) {
+          if (l.indexOf("@@T\t") !== 0) return;
+          var q = l.split("\t");
+          var k = parseInt(q[1], 10);
+          res[k] = { status: q[2] === "True" ? "PASS" : (q[2] === "False" ? "FAIL" : "ERR"), got: q[3], exp: q.slice(4).join("\t") };
+        });
+      });
+      var pass = res.filter(function (r) { return r.status === "PASS"; }).length;
+      var head = el("div", null, "");
+      head.appendChild(el("span", pass === res.length ? "pass" : "fail", pass + " / " + res.length + " doctests passed"));
+      out.appendChild(head);
+      res.forEach(function (r, i) {
+        var t = sec.runner.tests[i];
+        var line = el("div", null, (r.status === "PASS" ? "  ✓ " : "  ✗ ") + ">>> " + t.expr);
+        line.className = r.status === "PASS" ? "pass" : "fail";
+        out.appendChild(line);
+        if (r.status !== "PASS") {
+          out.appendChild(el("div", "fail", "      expected " + (r.exp || t.expected) + ", got " + r.got));
+        }
+      });
+    }).catch(function (e) {
+      status.remove();
+      var s = String(e && e.toString ? e.toString() : e);
+      if (s.indexOf("TimeLimitError") >= 0) s = "Ran for more than 8 seconds and was stopped — check for an infinite loop.";
+      out.appendChild(el("div", "fail", s));
+    }).then(done, done);
+  }
+
+  // ---------- timer ----------
+  var tTotal = 110 * 60, tLeft = tTotal, tHandle = null;
+  function fmt(n) {
+    var h = Math.floor(n / 3600), m = Math.floor((n % 3600) / 60), s = n % 60;
+    return h + ":" + String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+  }
+  function paintTimer() {
+    $("timer").textContent = fmt(Math.max(0, tLeft));
+    $("timer").className = "timer" + (tLeft <= 300 ? " low" : "");
+  }
+  function resetTimer() {
+    if (tHandle) { clearInterval(tHandle); tHandle = null; }
+    tLeft = tTotal; paintTimer(); $("t-start").textContent = "Start";
+  }
+  $("t-start").addEventListener("click", function () {
+    if (tHandle) {
+      clearInterval(tHandle); tHandle = null; $("t-start").textContent = "Resume";
+    } else {
+      tHandle = setInterval(function () {
+        tLeft--; paintTimer();
+        if (tLeft <= 0) { clearInterval(tHandle); tHandle = null; $("t-start").textContent = "Start"; }
+      }, 1000);
+      $("t-start").textContent = "Pause";
+    }
+  });
+  $("t-reset").addEventListener("click", resetTimer);
+
+  $("clear-exam").addEventListener("click", function () {
+    var btn = $("clear-exam");
+    if (!btn.dataset.armed) {
+      btn.dataset.armed = "1"; btn.textContent = "Click again to clear this exam";
+      setTimeout(function () { delete btn.dataset.armed; btn.textContent = "Clear my answers"; }, 3000);
+      return;
+    }
+    delete btn.dataset.armed; btn.textContent = "Clear my answers";
+    cur.questions.forEach(function (q) {
+      partsOf(q).forEach(function (p) { delete store.ans[partId(p)]; delete store.shown[partId(p)]; });
+    });
+    save(); renderAll();
+  });
+
+  assignIds();
+  renderAll();
+})();
+</script>
+</body></html>

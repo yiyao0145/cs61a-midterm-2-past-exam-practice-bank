@@ -32,6 +32,7 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-ui); fo
 header.top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; }
 header.top h1 { font-size: 20px; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
 header.top p { margin: 0; color: var(--muted); font-size: 13px; }
+header.top a { color: var(--accent); }
 .progress { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .bar { width: 140px; height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
 .bar > i { display: block; height: 100%; width: 0; background: var(--ok); transition: width .25s; }
@@ -139,7 +140,7 @@ textarea#code { width: 100%; display: block; font-family: var(--font-code); font
   <header class="top">
     <div>
       <h1>CS61A Midterm 2 Past Exam Practice Bank</h1>
-      <p>20 problems converted from real past-exam questions (recursion, tree recursion, lists &amp; dicts, linked lists, mutation, higher-order functions, generators) into full coding-implementation problems.</p>
+      <p>20 problems converted from real past-exam questions (recursion, tree recursion, lists &amp; dicts, linked lists, mutation, higher-order functions, generators) into full coding-implementation problems. Want whole exams in their original form instead? Try <a href="exams.html">past exams</a>.</p>
     </div>
     <div class="progress"><span id="prog-text">0 / 0 done</span><div class="bar"><i id="prog-bar"></i></div></div>
   </header>
