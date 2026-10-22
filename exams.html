@@ -1,7 +1,7 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>[hidden]{display:none!important}</style></head><body>
 <title>CS61A Midterm 2 — Past Exams</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="theme.css">
 <script src="theme.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
@@ -16,11 +16,37 @@
 
 <div class="wrap">
   <header class="top">
-    <div>
-      <h1>CS61A Midterm 2 — Past Exams</h1>
-      <p>Six real past Midterm 2 exams, in their original form, answerable on screen. Looking for single problems with automatic grading instead? Try the <a href="index.html">practice bank</a>.</p>
+    <div class="topbar">
+      <div class="brand">
+        <span class="logo">&#8599;</span>
+        <div>
+          <div class="brand-name">CS61A Midterm 2 Past Exam Practice Bank</div>
+          <div class="eyebrow">Berkeley CS &middot; Midterm 2 &middot; Past exams</div>
+        </div>
+      </div>
+      <div class="top-actions">
+        <a class="btn" href="index.html">Practice bank &rarr;</a>
+      </div>
     </div>
   </header>
+
+  <section class="hero">
+    <div class="hero-main">
+      <div class="eyebrow"><i class="dot"></i>UC Berkeley &middot; CS 61A &middot; Spring 2023 &ndash; Fall 2025</div>
+      <h1>Past exams</h1>
+      <p>Six real Midterm 2 exams, in their original form and answerable on screen. Choose an exam, start the timer if you want to sit it, and check yourself as you go. Looking for single problems with automatic grading instead? Try the practice bank.</p>
+    </div>
+    <div class="hero-side">
+      <div class="mono">Python runs in your browser &middot; no backend<br>Answers are saved on this device</div>
+    </div>
+  </section>
+
+  <section class="stats" aria-label="Summary">
+    <div class="stat"><div class="eyebrow">Exams</div><div class="num"><span>6</span><small>2023 &ndash; 2025</small></div></div>
+    <div class="stat"><div class="eyebrow">Questions</div><div class="num"><span id="st-q">0</span><small>in this exam</small></div></div>
+    <div class="stat"><div class="eyebrow">Answer blanks</div><div class="num"><span id="st-b">0</span><small>in this exam</small></div></div>
+    <div class="stat"><div class="eyebrow">Auto-checked</div><div class="num"><span id="st-c">0</span><small id="st-c-sub"></small></div></div>
+  </section>
 
   <div class="examtabs" id="examtabs"></div>
 
@@ -152,6 +178,12 @@
     $("score").textContent = done
       ? "Auto-checked: " + right + " / " + done + " correct (" + all.length + " checkable parts in this exam)"
       : all.length + " parts in this exam can be checked automatically";
+    var nb = 0;
+    cur.questions.forEach(function (q) { nb += partsOf(q).length; });
+    $("st-q").textContent = cur.questions.length;
+    $("st-b").textContent = nb;
+    $("st-c").textContent = right;
+    $("st-c-sub").textContent = "of " + all.length + " checkable";
   }
 
   function renderPart(p, sec, q) {

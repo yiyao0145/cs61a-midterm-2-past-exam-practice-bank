@@ -1,7 +1,7 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>[hidden]{display:none!important}</style></head><body>
 <title>CS61A Midterm 2 Past Exam Practice Bank</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="theme.css">
 <script src="theme.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
@@ -10,12 +10,39 @@
 
 <div class="wrap">
   <header class="top">
-    <div>
-      <h1>CS61A Midterm 2 Past Exam Practice Bank</h1>
-      <p>20 problems converted from real past-exam questions (recursion, tree recursion, lists &amp; dicts, linked lists, mutation, higher-order functions, generators) into full coding-implementation problems. Want whole exams in their original form instead? Try <a href="exams.html">past exams</a>.</p>
+    <div class="topbar">
+      <div class="brand">
+        <span class="logo">&#8599;</span>
+        <div>
+          <div class="brand-name">CS61A Midterm 2 Past Exam Practice Bank</div>
+          <div class="eyebrow">Berkeley CS &middot; Midterm 2 &middot; Practice bank</div>
+        </div>
+      </div>
+      <div class="top-actions">
+        <a class="btn" href="exams.html">Past exams &rarr;</a>
+      </div>
     </div>
-    <div class="progress"><span id="prog-text">0 / 0 done</span><div class="bar"><i id="prog-bar"></i></div></div>
   </header>
+
+  <section class="hero">
+    <div class="hero-main">
+      <div class="eyebrow"><i class="dot"></i>UC Berkeley &middot; CS 61A &middot; Midterm 2</div>
+      <h1>Practice overview</h1>
+      <p>Twenty real past-exam questions, each rebuilt as a full coding problem. Write the whole function, run the hidden tests, ask for a hint when you are stuck, and open a worked solution when you are done.</p>
+    </div>
+    <div class="hero-side">
+      <div class="mono">Python runs in your browser &middot; no backend<br>Progress is saved on this device</div>
+      <div class="progress"><span id="prog-text">0 / 0 done</span><div class="bar"><i id="prog-bar"></i></div></div>
+    </div>
+  </section>
+
+  <section class="stats" aria-label="Summary">
+    <div class="stat"><div class="eyebrow">Problems</div><div class="num"><span id="st-total">0</span><small id="st-topics"></small></div></div>
+    <div class="stat"><div class="eyebrow">Completed</div><div class="num"><span id="st-done">0</span><small>all tests passing</small></div></div>
+    <div class="stat"><div class="eyebrow">Remaining</div><div class="num"><span id="st-left">0</span><small>to go</small></div></div>
+    <div class="stat"><div class="eyebrow">Hints used</div><div class="num"><span id="st-hints">0</span><small>across all problems</small></div></div>
+  </section>
+
   <div class="layout">
     <nav class="index" id="index" aria-label="Problem list"></nav>
     <main class="work">
@@ -131,6 +158,11 @@ var DATA = QUESTION_BANK;
     });
     var done = problems.filter(function (p) { var b = store.best[p.id]; return b && b[0] === b[1]; }).length;
     $("prog-text").textContent = done + " / " + problems.length + " done";
+    $("st-total").textContent = problems.length;
+    $("st-topics").textContent = "across " + (topics().length - 1) + " topics";
+    $("st-done").textContent = done;
+    $("st-left").textContent = problems.length - done;
+    $("st-hints").textContent = Object.keys(store.hints).reduce(function (a, k) { return a + (store.hints[k] || 0); }, 0);
     $("prog-bar").style.width = (100 * done / problems.length) + "%";
   }
 
